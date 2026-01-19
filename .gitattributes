@@ -1,0 +1,19 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Denote all files that are truly binary and should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Prevent CRLF conversion for shell scripts
+*.sh text eol=lf
+
+# Lock files should not be modified
+pnpm-lock.yaml -diff linguist-generated

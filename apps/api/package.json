@@ -1,0 +1,36 @@
+{
+  "name": "@repo/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "start:prod": "NODE_ENV=production node dist/main.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:cov": "vitest --coverage",
+    "clean": "rm -rf dist .turbo node_modules"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "@repo/database": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@repo/trpc": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.703",
+    "fastify": "^5.2.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.13.5",
+    "eslint": "^9.20.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.17"
+  }
+}
