@@ -1,6 +1,7 @@
 ---
 name: create
 description: Create Linear issue + GitHub issue using brainstorming mode
+user-invocable: true
 ---
 
 ## Pre-checks
