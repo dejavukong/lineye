@@ -22,74 +22,152 @@ Vague idea → AI refines through questions → Linear issue → Auto-sync to Gi
 npm install -g lineye-cli
 ```
 
-### 2. Install Claude Code Skills
-
-In Claude Code, add the marketplace:
-
-```
-/plugin marketplace add dejavukong/lineye
-```
-
-Then install:
-
-```
-/plugin install lineye@lineye
-```
-
-### 3. Initialize
+### 2. Configure Lineye
 
 ```bash
 lineye init
 ```
 
-Follow prompts to enter:
-- Linear API Key ([get here](https://linear.app/settings/account/security))
-- Select default Team
+You'll be prompted to:
 
-## Usage
+1. **Enter Linear API Key**
+   - Go to https://linear.app/settings/account/security
+   - Click "New API Key" and copy it
 
-In Claude Code:
+2. **Verify Connection**
+   - Lineye will show your workspace name after verification
+
+3. **Set Workspace Alias**
+   - A short name for quick switching (e.g., `work`, `personal`)
+   - Suggested alias is auto-generated from workspace name
+
+4. **Select Default Team**
+   - Choose which team's issues to manage by default
+
+### 3. Install Claude Code Skills
+
+In Claude Code, add the plugin marketplace:
+
+```
+/plugin marketplace add dejavukong/lineye
+```
+
+Then install the skills:
+
+```
+/plugin install lineye@lineye
+```
+
+## Usage Workflow
+
+### Step 1: Create Task (`/lineye:create`)
+
+Have an idea? Let AI help you turn it into a well-defined Linear issue:
+
+```
+> /lineye:create I want to add a dark mode feature
+```
+
+AI will:
+- Ask clarifying questions to understand scope
+- Define acceptance criteria
+- Create a Linear issue with proper structure
+- Optionally sync to GitHub Issues
+
+**Output:** A new Linear issue (e.g., `ENG-123`) with a URL like:
+```
+https://linear.app/your-team/issue/ENG-123/dark-mode-feature
+```
+
+### Step 2: Start Working (`/lineye:start`)
+
+Ready to code? Pick up any task using its ID or URL:
 
 ```bash
-# Create new task via brainstorming
-> /lineye:create I want to add a search feature
-
-# Pick up task and start coding
+# Using issue ID
 > /lineye:start ENG-123
+
+# Using lowercase
+> /lineye:start eng-123
+
+# Using just the number (uses default team prefix)
+> /lineye:start 123
+
+# Using Linear URL (copy from browser)
+> /lineye:start https://linear.app/your-team/issue/ENG-123/dark-mode-feature
+```
+
+AI will:
+- Fetch and display task details
+- Ask for branch type (feat/fix/refactor/chore)
+- Suggest branch name from issue title
+- Create and checkout the branch
+- Load task context for implementation
+
+**Output:**
+```
+✅ Branch created: feat/ENG-123-dark-mode-feature
+✅ Switched to new branch
+📋 Task context loaded
+
+Now you can start implementing!
+```
+
+### Step 3: Code & Push
+
+After pushing your branch, Linear automatically updates the issue status to "In Progress".
+
+### Step 4: Merge PR
+
+When your PR is merged, Linear automatically marks the issue as "Done".
+
+## Quick Reference
+
+| Action | Command |
+|--------|---------|
+| Create new task | `/lineye:create <your idea>` |
+| Start working (ID) | `/lineye:start ENG-123` |
+| Start working (URL) | `/lineye:start https://linear.app/.../ENG-123/...` |
+| Show issue details | `lineye show ENG-123` |
+| List your issues | `lineye list` |
+
+## Multiple Workspaces
+
+Managing multiple Linear workspaces?
+
+```bash
+# Add another workspace
+lineye init
+
+# List all workspaces
+lineye workspace list
+
+# Switch default workspace
+lineye workspace use personal
+
+# Check current workspace
+lineye workspace current
 ```
 
 ## CLI Commands
 
-### Config
-
 ```bash
-lineye init                     # Initialize
+# Setup
+lineye init                     # Initialize / add workspace
 lineye workspace list           # List workspaces
 lineye workspace use <alias>    # Switch workspace
 lineye workspace current        # Show current
-```
 
-### Query
-
-```bash
+# Query
+lineye list                     # List assigned issues
+lineye show <issue-id>          # Show issue details
 lineye list-teams               # List teams
 lineye list-projects            # List projects
-lineye show <issue-id>          # Show issue details
-```
 
-### Operations
-
-```bash
+# Operations (used by skills internally)
 lineye create-issue --title "Title" --body "Content"
 lineye create-branch --issue ENG-123 --type feat
 ```
-
-## Claude Code Skills
-
-| Skill | Description |
-|-------|-------------|
-| `/lineye:create` | AI-driven brainstorming → Linear issue |
-| `/lineye:start <id>` | Load task context → Create branch → Start coding |
 
 ## Linear + GitHub Integration
 
