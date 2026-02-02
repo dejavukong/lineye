@@ -1,6 +1,6 @@
 {
   "name": "lineye-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AI-powered task management CLI for Linear - turn ideas into issues automatically",
   "type": "module",
   "bin": {
