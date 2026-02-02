@@ -147,15 +147,26 @@ export async function createIssue(params: CreateIssueParams): Promise<CreateIssu
   };
 }
 
-export async function parseIssueIdentifier(
-  input: string,
-  workspaceAlias?: string
-): Promise<string> {
-  // URL format: https://linear.app/team/issue/ENG-123
+/**
+ * Extract issue identifier from various input formats
+ * Supports: ENG-123, 123, https://linear.app/workspace/issue/ENG-123/title
+ */
+export function extractIssueIdFromUrl(input: string): string | null {
+  // URL format: https://linear.app/workspace/issue/ENG-123 or https://linear.app/issue/ENG-123
   if (input.includes('linear.app')) {
     const match = input.match(/issue\/([A-Z]+-\d+)/i);
     if (match) return match[1].toUpperCase();
   }
+  return null;
+}
+
+export async function parseIssueIdentifier(
+  input: string,
+  workspaceAlias?: string
+): Promise<string> {
+  // Try URL extraction first
+  const fromUrl = extractIssueIdFromUrl(input);
+  if (fromUrl) return fromUrl;
 
   // GitHub URL format: try to detect from linked issue
   if (input.includes('github.com')) {
@@ -174,7 +185,10 @@ export async function parseIssueIdentifier(
 
 export async function detectWorkspace(issueId: string): Promise<string | null> {
   const config = await getConfig();
-  const prefix = issueId.split('-')[0].toUpperCase();
+
+  // Extract issue ID from URL if needed
+  const identifier = extractIssueIdFromUrl(issueId) ?? issueId;
+  const prefix = identifier.split('-')[0].toUpperCase();
 
   for (const [alias, ws] of Object.entries(config.workspaces)) {
     if (ws.defaultTeamKey === prefix) {
