@@ -8,6 +8,5 @@
   "homepage": "https://github.com/dejavukong/lineye",
   "repository": "https://github.com/dejavukong/lineye",
   "license": "MIT",
-  "keywords": ["linear", "github", "task-management", "ai", "brainstorming", "claude-code"],
-  "skills": "packages/lineye-skills"
+  "keywords": ["linear", "github", "task-management", "ai", "brainstorming", "claude-code"]
 }

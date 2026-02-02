@@ -33,6 +33,9 @@ lineye/
 ├── .claude-plugin/           # Claude Code Plugin marketplace config
 │   ├── plugin.json
 │   └── marketplace.json
+├── skills/                   # Claude Code skills (root level)
+│   ├── lineye-create/
+│   └── lineye-start/
 ├── packages/
 │   ├── lineye-cli/           # Main CLI package (npm)
 │   │   ├── src/
@@ -40,9 +43,6 @@ lineye/
 │   │   │   ├── lib/          # Core utilities
 │   │   │   └── index.ts      # Entry point
 │   │   └── package.json
-│   ├── lineye-skills/        # Claude Code skills
-│   │   ├── lineye-create/
-│   │   └── lineye-start/
 │   ├── eslint-config/        # Shared ESLint config
 │   └── typescript-config/    # Shared TypeScript config
 └── package.json
@@ -57,7 +57,7 @@ lineye/
 | `packages/lineye-cli/src/lib/config.ts` | Config management |
 | `packages/lineye-cli/src/lib/linear.ts` | Linear API integration |
 | `packages/lineye-cli/src/lib/git.ts` | Git operations |
-| `packages/lineye-skills/*/SKILL.md` | Claude Code skill definitions |
+| `skills/*/SKILL.md` | Claude Code skill definitions |
 
 ## Adding New CLI Commands
 
