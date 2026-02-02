@@ -56,27 +56,30 @@ Collect user bug reports and feature suggestions
 
 ### 3. Create Branch
 
-Ask for branch type:
+Use `AskUserQuestion` tool to ask for branch details in ONE call with TWO questions:
 
-```
-Branch type:
-  1. feat (new feature)
-  2. fix (bug fix)
-  3. refactor (refactoring)
-  4. chore (maintenance)
->
-```
+**Question 1 - Branch type:**
+- header: "Branch type"
+- question: "What type of branch should I create?"
+- options:
+  - `feat` - New feature
+  - `fix` - Bug fix
+  - `refactor` - Code refactoring
+  - `chore` - Maintenance task
 
-Generate slug suggestion from title, let user confirm or modify:
+**Question 2 - Branch name suffix:**
+- header: "Branch suffix"
+- question: "Branch name suffix? Suggested: `<generated-slug>` (select to use, or choose Other to customize)"
+- options:
+  - `<generated-slug>` - Use suggested name (generate a kebab-case slug from issue title)
+  - `custom` - Enter custom name
 
-```
-Branch name suffix [user-feedback]:
-```
+**IMPORTANT:** Do NOT use text prompts like "Press Enter to confirm". Always use AskUserQuestion with explicit options.
 
-Execute creation:
+After getting answers, execute:
 
 ```bash
-lineye create-branch --issue ENG-128 --type feat --slug user-feedback
+lineye create-branch --issue ENG-128 --type <selected-type> --slug <selected-or-custom-slug>
 ```
 
 ### 4. Output Result
@@ -114,15 +117,13 @@ Please check and try again
 
 ### Branch Already Exists
 
-```
-⚠️ Branch feat/ENG-128-user-feedback already exists
-
-Choose action:
-  1. Switch to that branch and continue development
-  2. Create new branch (add suffix)
-  3. Cancel
->
-```
+Use `AskUserQuestion` tool:
+- header: "Branch exists"
+- question: "Branch `feat/ENG-128-user-feedback` already exists. What would you like to do?"
+- options:
+  - `switch` - Switch to existing branch and continue
+  - `new` - Create new branch with suffix
+  - `cancel` - Cancel operation
 
 ### Not in Git Repository
 
