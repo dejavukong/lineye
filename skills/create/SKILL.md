@@ -1,5 +1,5 @@
 ---
-name: lineye:create
+name: create
 description: Create Linear issue + GitHub issue using brainstorming mode
 ---
 

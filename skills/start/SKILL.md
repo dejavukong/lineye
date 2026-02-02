@@ -1,5 +1,5 @@
 ---
-name: lineye:start
+name: start
 description: Pick up task, load context, create branch
 args: <issue-id | url>
 ---
