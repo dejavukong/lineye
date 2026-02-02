@@ -35,23 +35,7 @@ export async function init() {
     }
   }
 
-  // Get workspace alias
-  const alias = await p.text({
-    message: 'Workspace alias (for quick switching)',
-    placeholder: 'work',
-    validate: (value) => {
-      if (!value) return 'Please enter an alias';
-      if (!/^[a-z0-9-]+$/.test(value)) return 'Only lowercase letters, numbers, and hyphens allowed';
-      return undefined;
-    },
-  });
-
-  if (p.isCancel(alias)) {
-    p.cancel('Cancelled');
-    process.exit(0);
-  }
-
-  // Get API Key
+  // Get API Key first
   p.note(
     'Open https://linear.app/settings/account/security\nClick "New API Key" to create one',
     '💡 How to get API Key'
@@ -84,6 +68,30 @@ export async function init() {
   }
 
   spin.stop(`✅ Connected to: ${verification.workspaceName}`);
+
+  // Generate suggested alias from workspace name
+  const suggestedAlias = verification.workspaceName!
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 20);
+
+  // Get workspace alias (now user knows the workspace name)
+  const alias = await p.text({
+    message: `Alias for "${verification.workspaceName}" (for quick switching)`,
+    placeholder: suggestedAlias || 'work',
+    defaultValue: suggestedAlias,
+    validate: (value) => {
+      if (!value) return 'Please enter an alias';
+      if (!/^[a-z0-9-]+$/.test(value)) return 'Only lowercase letters, numbers, and hyphens allowed';
+      return undefined;
+    },
+  });
+
+  if (p.isCancel(alias)) {
+    p.cancel('Cancelled');
+    process.exit(0);
+  }
 
   // Select default team
   const teamOptions = verification.teams!.map((t) => ({
