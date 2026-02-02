@@ -1,18 +1,15 @@
 {
-  "name": "lineye-marketplace",
-  "description": "Marketplace for Lineye - AI-powered task management plugin for Claude Code",
+  "name": "lineye",
   "owner": {
-    "name": "dejavukong"
+    "name": "dejavukong",
+    "url": "https://github.com/dejavukong"
   },
   "plugins": [
     {
       "name": "lineye",
-      "description": "AI-powered task management for Linear - turn ideas into issues automatically with brainstorming mode",
-      "version": "0.1.1",
       "source": "./",
-      "author": {
-        "name": "dejavukong"
-      }
+      "description": "AI-powered task management for Linear - turn ideas into issues automatically with brainstorming mode",
+      "version": "0.1.2"
     }
   ]
 }
