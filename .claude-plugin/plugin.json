@@ -1,0 +1,13 @@
+{
+  "name": "lineye",
+  "description": "AI-powered task management for Linear - turn ideas into issues automatically with brainstorming mode",
+  "version": "0.1.0",
+  "author": {
+    "name": "dejavukong"
+  },
+  "homepage": "https://github.com/dejavukong/lineye",
+  "repository": "https://github.com/dejavukong/lineye",
+  "license": "MIT",
+  "keywords": ["linear", "github", "task-management", "ai", "brainstorming", "claude-code"],
+  "skills": "packages/lineye-skills"
+}

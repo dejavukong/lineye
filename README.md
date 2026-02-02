@@ -1,43 +1,132 @@
-# MVP Starter
+# Lineye
 
-> Full-stack monorepo: Vite + React, Fastify + tRPC, Drizzle + SQLite
+AI-powered task management — Turn ideas into Linear issues, let Linear + GitHub auto-manage progress.
 
-## Tech Stack
-
-| Layer | Tech |
-|-------|------|
-| Frontend | React 19, Vite, Tailwind CSS 4, shadcn/ui |
-| Backend | Fastify, tRPC |
-| Database | Drizzle ORM, SQLite |
-| Tooling | pnpm, Turborepo, TypeScript, ESLint, Vitest |
-
-## Structure
+## How It Works
 
 ```
-apps/
-  web/          # React SPA (port 3000)
-  api/          # Fastify API (port 3001)
-packages/
-  ui/           # shadcn/ui components
-  database/     # Drizzle ORM + schema
-  trpc/         # tRPC router definitions
-  shared/       # Shared types & utils
+Vague idea → AI refines through questions → Linear issue → Auto-sync to GitHub
+                                                    ↓
+              Developer checkout branch → Auto "In Progress"
+                                                    ↓
+                              PR merged → Auto "Done"
 ```
 
-## Commands
+**You only need to do one thing: Tell AI your idea, the rest is automatic.**
+
+## Installation
+
+### 1. Install CLI
 
 ```bash
-pnpm install        # Install deps
-pnpm dev            # Start all apps
-pnpm build          # Build all
-pnpm test           # Run tests
-pnpm db:studio      # Open Drizzle Studio
+npm install -g lineye-cli
 ```
 
-## Package Dependencies
+### 2. Install Claude Code Skills
+
+In Claude Code, add the marketplace:
 
 ```
-web  → ui, trpc, shared
-api  → database, trpc, shared
-trpc → database, shared
+/plugin marketplace add dejavukong/lineye
 ```
+
+Then install:
+
+```
+/plugin install lineye@lineye
+```
+
+### 3. Initialize
+
+```bash
+lineye init
+```
+
+Follow prompts to enter:
+- Linear API Key ([get here](https://linear.app/settings/account/security))
+- Select default Team
+
+## Usage
+
+In Claude Code:
+
+```bash
+# Create new task via brainstorming
+> /lineye:create I want to add a search feature
+
+# Pick up task and start coding
+> /lineye:start ENG-123
+```
+
+## CLI Commands
+
+### Config
+
+```bash
+lineye init                     # Initialize
+lineye workspace list           # List workspaces
+lineye workspace use <alias>    # Switch workspace
+lineye workspace current        # Show current
+```
+
+### Query
+
+```bash
+lineye list-teams               # List teams
+lineye list-projects            # List projects
+lineye show <issue-id>          # Show issue details
+```
+
+### Operations
+
+```bash
+lineye create-issue --title "Title" --body "Content"
+lineye create-branch --issue ENG-123 --type feat
+```
+
+## Claude Code Skills
+
+| Skill | Description |
+|-------|-------------|
+| `/lineye:create` | AI-driven brainstorming → Linear issue |
+| `/lineye:start <id>` | Load task context → Create branch → Start coding |
+
+## Linear + GitHub Integration
+
+Set up [Linear GitHub integration](https://linear.app/docs/github-integration) to enable auto status updates.
+
+**Branch naming:**
+```
+feat/ENG-123-feature-name
+fix/ENG-456-bug-description
+```
+
+Linear auto-detects issue ID and updates status.
+
+## Config
+
+Stored at `~/.config/lineye/config.json`:
+
+```json
+{
+  "defaultWorkspace": "work",
+  "workspaces": {
+    "work": {
+      "name": "Acme Corp",
+      "apiKey": "lin_api_xxx",
+      "defaultTeamId": "team-123",
+      "defaultTeamKey": "ENG"
+    }
+  }
+}
+```
+
+## Requirements
+
+- [Linear](https://linear.app) account
+- [Claude Code](https://claude.ai/code) (for Skills)
+- Node.js >= 20
+
+## License
+
+MIT

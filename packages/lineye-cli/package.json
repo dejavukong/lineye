@@ -1,0 +1,54 @@
+{
+  "name": "lineye-cli",
+  "version": "0.1.0",
+  "description": "AI-powered task management CLI for Linear - turn ideas into issues automatically",
+  "type": "module",
+  "bin": {
+    "lineye": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "linear",
+    "github",
+    "cli",
+    "task-management",
+    "ai",
+    "claude",
+    "project-management",
+    "developer-tools"
+  ],
+  "author": "dejavukong",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dejavukong/lineye"
+  },
+  "homepage": "https://github.com/dejavukong/lineye#readme",
+  "bugs": {
+    "url": "https://github.com/dejavukong/lineye/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "@linear/sdk": "^29.0.0",
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
